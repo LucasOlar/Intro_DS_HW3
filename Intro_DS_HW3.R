@@ -68,3 +68,7 @@ ggplot(df, aes(x = x_values, y = y_values)) +
   labs(title = 'Bacteria Mobility',
        x = 'X Position', 
        y = 'Y Position', )
+
+
+# trying to implement animation 
+
