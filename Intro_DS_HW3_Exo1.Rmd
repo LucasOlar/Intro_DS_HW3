@@ -94,14 +94,15 @@ df <- data.frame(x1 = sin(angle)*3, y1 = cos(angle)*3)
 
 # Implementation of animation 
 p <- ggplot(data = positions, aes(x = y, y = x, color = name, group = name)) +
-  geom_polygon(aes(x = x1, y = y1),fill = "tan2", data = df, inherit.aes = F) +
+  geom_polygon(aes(x = x1, y = y1),fill = "tan2", linetype = 1, colour = "black", data = df, inherit.aes = F) +
   annotate("text", x = 0, y = 0, label = "SUGAR", col = "white", size = 6) +
   geom_point(pch = 11) +
   geom_line(alpha = 0.4) +
   theme_bw() +
-  theme(plot.title = element_text(face = "bold")) +
   theme(legend.position = "none") +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 20)) +
+  theme(axis.title.x = element_text(size = 14, face="bold"),
+        axis.title.y = element_text(size=14, face="bold")) +
   scale_x_continuous(name = 'X Position', breaks = seq(-10,10, by = 5)) +
   scale_y_continuous(name = 'Y Position', breaks = seq(-10,10, by = 5)) +
   transition_reveal(time) +
@@ -110,7 +111,9 @@ p <- ggplot(data = positions, aes(x = y, y = x, color = name, group = name)) +
 
 ```
 
-```{r exo 1 graph 1, echo = FALSE, message = FALSE, warning = FALSE, out.width = "110%", out.height = "100%"}
+```{r exo 1 graph 1, echo = FALSE, message = FALSE, warning = FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, fig.width = 9, fig.height = 8)
 
 #duration calculation : 120 frames, want them to last 0.2 sec/frame --> 120*0.25 = 30 seconds
 animate(p, duration = 30 , fps = 8)
