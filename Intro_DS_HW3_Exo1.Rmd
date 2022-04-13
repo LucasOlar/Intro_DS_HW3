@@ -1,3 +1,12 @@
+---
+title: "Intro_DS_WH3_exo1"
+author: "Lucas Olarreaga"
+date: '2022-04-13'
+output: html_document
+---
+
+```{r exo 1 code, echo = FALSE, message = FALSE, include = FALSE, warning = FALSE}
+
 library(ggplot2)
 library(tidyr)
 library(dplyr)
@@ -6,7 +15,7 @@ library(gganimate)
 library(directlabels)
 
 #number of --> reduce this to test quicker
-bacteria <- 5
+bacteria <- 25
 
 # Number of steps
 steps <- 120
@@ -99,11 +108,23 @@ p <- ggplot(data = positions, aes(x = y, y = x, color = name, group = name)) +
   labs(title = 'Bacteria Mobility') +
   coord_cartesian(ylim = c(-10,10), xlim = c(-12,12))
 
+```
 
+```{r exo 1 graph 1, echo = FALSE, message = FALSE, warning = FALSE, out.width = "110%", out.height = "100%"}
 
 #duration calculation : 120 frames, want them to last 0.2 sec/frame --> 120*0.25 = 30 seconds
-animated_plot <- animate(p, duration = 30 , fps = 8)
-animated_plot
+animate(p, duration = 30 , fps = 8)
+
+```
+
+
+
+
+
+
+
+
+
 
 
 
