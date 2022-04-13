@@ -2,9 +2,11 @@ library(ggplot2)
 library(tidyr)
 library(dplyr)
 library(magrittr)
+library(gganimate)
+library(directlabels)
 
 #number of bacteria
-bacteria <- 5
+bacteria <- 25
 
 # Number of steps
 steps <- 120
@@ -19,19 +21,32 @@ for (i in seq(0, bacteria*2)){
 
 # Start random walk
 for (i in seq(1, steps-1)){
-  # Draw a random number 
-  St = runif(1, 0, 2)
-  
-  #Drawing a random delta
-  delta = runif(1, min = 0, max = 2*pi)
-  
   #determining the position at point t = 1
   for(j in seq(1,bacteria*2)){
+    # Draw a random number 
+    St = runif(1, 0, 2)
+    
+    #Drawing a random delta
+    delta = runif(1, min = 0, max = 2*pi)
+    
     if(j %% 2 == 0){
       initial_position[i+1,j] = initial_position[i,j] + St*sin(delta)
     }
     else {
       initial_position[i+1,j] = initial_position[i,j] + St*cos(delta)
+    }
+  }
+}
+
+#Creating the central zone after which it no longer moves
+for (i in seq(1, bacteria*2, 2)){
+  for (j in seq(1, steps-1)){
+    position_X = initial_position[j,i]
+    position_Y = initial_position[j,i+1]
+    norm = sqrt(abs(position_X)^2+abs(position_Y)^2)
+    if (norm <= 3){
+      initial_position[j+1,i] =  position_X
+      initial_position[j+1,i+1] = position_Y 
     }
   }
 }
@@ -50,25 +65,36 @@ positions <- data.frame(cbind(positions_uneven, positions_even))
 #Naming data
 x = 1
 name_matrix <- matrix(NA, steps*bacteria, 1)
+time_matrix <- matrix(NA, steps*bacteria, 1)
 for (i in seq(from = 1, to = bacteria)){
   for (j in seq(from = 1, to = steps)){
     name_matrix[x,] = paste("Bacteria ", i)
+    integer = as.integer(j)
+    time_matrix[x,] = integer
     x = x+1
   }
 }
 positions[,1] = name_matrix[,1]
+positions[,3] = time_matrix[,1]
 
-df = subset(positions, select = -c(key.1) )
-colnames(df) <- c("Names", "x_values","y_values")
-df <- df %<% group_by(Names)
+colnames(positions) <- c("name", "x", "time", "y")
 
-# Let's make a nice graph...
-ggplot(df, aes(x = x_values, y = y_values)) +
-  geom_line(size = 1, colour = "blue") +
+# Implementation of animation 
+p <- ggplot(data = positions, aes(x = y, y = x, color = name, group = name)) +
+  geom_point(shape = 11) +
+  geom_line(alpha = 0.4) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  transition_reveal(time) +
   labs(title = 'Bacteria Mobility',
        x = 'X Position', 
-       y = 'Y Position', )
+       y = 'Y Position', ) + 
+  coord_cartesian(xlim=c(-15, 15)) +
+  coord_cartesian(ylim=c(-15, 15)) 
+   
+#duration calculation : 120 frames, want them to last 0.2 sec/frame --> 120*0.2 = 24 seconds
+animate(p, duration = 24 , fps = 10)
 
 
-# trying to implement animation 
 
