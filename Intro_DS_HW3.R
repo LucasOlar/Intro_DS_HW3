@@ -98,3 +98,20 @@ animate(p, duration = 24 , fps = 10)
 
 
 
+
+# code that could help modifying the points by images as aliens
+
+library("ggplot2")
+library("ggimage")
+
+# create a df
+
+set.seed(2017-02-21)
+d <- data.frame(x = rnorm(10),
+                y = rnorm(10),
+                image = sample(c("https://www.r-project.org/logo/Rlogo.png",
+                                 "https://jeroenooms.github.io/images/frink.png"),
+                               size=10, replace = TRUE)
+)
+# plot2
+ggplot(d, aes(x, y)) + geom_image(aes(image=image), size=.05)
