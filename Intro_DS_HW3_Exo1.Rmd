@@ -1,3 +1,12 @@
+---
+title: "Intro_DS_WH3_exo1"
+author: "Lucas Olarreaga"
+date: '2022-04-13'
+output: html_document
+---
+
+```{r exo 1 code, echo = FALSE, message = FALSE, include = FALSE, warning = FALSE}
+
 library(ggplot2)
 library(tidyr)
 library(dplyr)
@@ -6,7 +15,7 @@ library(gganimate)
 library(directlabels)
 
 #number of --> reduce this to test quicker
-bacteria <- 5
+bacteria <- 25
 
 # Number of steps
 steps <- 120
@@ -85,42 +94,40 @@ df <- data.frame(x1 = sin(angle)*3, y1 = cos(angle)*3)
 
 # Implementation of animation 
 p <- ggplot(data = positions, aes(x = y, y = x, color = name, group = name)) +
-  geom_polygon(aes(x = x1, y = y1),fill = "tan2", data = df, inherit.aes = F) +
+  geom_polygon(aes(x = x1, y = y1),fill = "tan2", linetype = 1, colour = "black", data = df, inherit.aes = F) +
   annotate("text", x = 0, y = 0, label = "SUGAR", col = "white", size = 6) +
   geom_point(pch = 11) +
   geom_line(alpha = 0.4) +
   theme_bw() +
-  theme(plot.title = element_text(face = "bold")) +
   theme(legend.position = "none") +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 20)) +
+  theme(axis.title.x = element_text(size = 14, face="bold"),
+        axis.title.y = element_text(size=14, face="bold")) +
   scale_x_continuous(name = 'X Position', breaks = seq(-10,10, by = 5)) +
   scale_y_continuous(name = 'Y Position', breaks = seq(-10,10, by = 5)) +
   transition_reveal(time) +
   labs(title = 'Bacteria Mobility') +
   coord_cartesian(ylim = c(-10,10), xlim = c(-12,12))
 
+```
 
+```{r exo 1 graph 1, echo = FALSE, message = FALSE, warning = FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, fig.width = 9, fig.height = 8)
 
 #duration calculation : 120 frames, want them to last 0.2 sec/frame --> 120*0.25 = 30 seconds
-animated_plot <- animate(p, duration = 30 , fps = 8)
-animated_plot
+animate(p, duration = 30 , fps = 8)
+
+```
 
 
 
 
-# code that could help modifying the points by images as aliens
 
-library("ggplot2")
-library("ggimage")
 
-# create a df
 
-set.seed(2017-02-21)
-d <- data.frame(x = rnorm(10),
-                y = rnorm(10),
-                image = sample(c("https://www.r-project.org/logo/Rlogo.png",
-                                 "https://jeroenooms.github.io/images/frink.png"),
-                               size=10, replace = TRUE)
-)
-# plot2
-ggplot(d, aes(x, y)) + geom_image(aes(image=image), size=.05)
+
+
+
+
+
