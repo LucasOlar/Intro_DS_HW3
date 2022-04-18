@@ -93,7 +93,7 @@ angle <- seq(-pi, pi, length = 50)
 df <- data.frame(x1 = sin(angle)*3, y1 = cos(angle)*3)
 
 # Implementation of animation 
-p <- ggplot(data = positions, aes(x = y, y = x, color = name, group = name)) +
+p <- ggplot(data = positions, aes(x = x, y = y, color = name, group = name)) +
   geom_polygon(aes(x = x1, y = y1),fill = "tan2", linetype = 1, colour = "black", data = df, inherit.aes = F) +
   annotate("text", x = 0, y = 0, label = "SUGAR", col = "white", size = 6) +
   geom_point(pch = 11) +
