@@ -131,8 +131,7 @@ for (i in seq(1, bacteria*2, 2)){
   #Creating images of animation
   dir.create(file.path("plotsHW3"), recursive = TRUE)
   
-  
-  
+  #Change value here of from to get graph
   for(i in seq(from = 59, to = 59)){
     
     data_positions = positions %>%
