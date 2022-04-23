@@ -129,10 +129,10 @@ for (i in seq(1, bacteria*2, 2)){
   df <- data.frame(x1 = sin(angle)*3, y1 = cos(angle)*3)
   
   #Creating images of animation
-  dir.create(file.path("plotsHW3"), recursive = TRUE)
+  #dir.create(file.path("plotsHW3"), recursive = TRUE)
   
   #Change value here of from to get graph
-  for(i in seq(from = 59, to = 59)){
+  for(i in seq(from = 1, to = 2)){
     
     data_positions = positions %>%
       filter(time == i) %>%
@@ -167,7 +167,9 @@ for (i in seq(1, bacteria*2, 2)){
       coord_cartesian(ylim = c(-10,10), xlim = c(-12,12))
     
     
-    fp <- file.path(file.path("plotsHW3"), paste0(i, ".png"))
-    ggsave(plot = plot_bacteria, filename = fp, device = "png")
+   # fp <- file.path(file.path("plotsHW3"), paste0(i, ".png"))
+   # ggsave(plot = plot_bacteria, filename = fp, device = "png")
   }
+plot_bacteria
+
 
