@@ -122,7 +122,7 @@ angle <- seq(-pi, pi, length = 50)
 df <- data.frame(x1 = sin(angle)*3, y1 = cos(angle)*3)
 
 #Change value here of from to get graph
-for(i in seq(from = stages, to = stages)){
+for(i in seq(from = stages+1, to = stages+1)){
   
   data_positions = positions %>%
     filter(time == i) %>%

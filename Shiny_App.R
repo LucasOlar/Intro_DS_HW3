@@ -4,7 +4,7 @@ source(file = "shiny_app_code.R", local = T)
 ui <- fluidPage(
   
   # Application title
-  titlePanel(h4("Buffon\'s needle experiment - Inputs:")),
+  titlePanel(h4("Bacteria Mobility App")),
   
   sidebarLayout(
     sidebarPanel(
@@ -13,12 +13,11 @@ ui <- fluidPage(
       numericInput("c_button", "K constant C", value = 0),
       numericInput("seed_choice_button", "Simulation seed", value = 1),
       actionButton("compute", "Useless Button", icon = icon("calculator"), width = 200, height = 100),
-      sliderInput("stages", "Run animation of simulation", min = 1, max = 100, value = 1, animate = T)
+      sliderInput("stages", "Run animation of simulation", min = 0, max = 100, value = 1, animate = T)
     ),
     
     mainPanel(
       plotOutput("bacteriaPlot"),
-      plotOutput("bacteria_initial")
     )    
   )
 )
