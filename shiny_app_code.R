@@ -121,15 +121,13 @@ colnames(positions) <- c("name", "x", "time", "y")
 angle <- seq(-pi, pi, length = 50)
 df <- data.frame(x1 = sin(angle)*3, y1 = cos(angle)*3)
 
-#Change value here of from to get graph
-for(i in seq(from = stages, to = stages)){
-  
+#Change value here of stages to get graph
   data_positions = positions %>%
-    filter(time == i) %>%
+    filter(time == stages) %>%
     select(name, x, y)
   
   line_positions = positions %>%
-    filter(time <= i) %>%
+    filter(time <= stages) %>%
     select(name, x, y)
   
   count_center = 0
@@ -155,7 +153,6 @@ for(i in seq(from = stages, to = stages)){
     scale_y_continuous(name = 'Y Position', breaks = seq(-10,10, by = 5)) +
     labs(title = 'Bacteria Mobility') +
     coord_cartesian(ylim = c(-10,10), xlim = c(-12,12))
-}
 
 return(plot_bacteria)
 
