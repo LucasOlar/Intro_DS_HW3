@@ -138,7 +138,7 @@ bacteria_plot = function(positions, stages){
   #count the number of points within the center circle
   count_center = 0
   
-  for(j in seq(from = 1, to = length(data_positions))){
+  for(j in seq(from = 1, to = nrow(data_positions))){
     if ((sqrt(abs(data_positions[j,2])^2+abs(data_positions[j,3])^2))<=3){
       count_center = count_center + 1
     }
