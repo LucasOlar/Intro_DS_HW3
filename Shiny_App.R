@@ -1,3 +1,5 @@
+library(shinyalert)
+
 source(file = "shiny_app_code.R", local = T)
 
 # Define UI for application
@@ -32,7 +34,14 @@ server <- function(input, output) {
       move = input$move_button, 
       stages = input$stages)
   }, height = 500, width = 600)
+  
+  observeEvent(input$compute,{
+    shinyalert(
+      title = "That was useless!",
+      text = "Because of how our code was made this button isn't usefull")
+    })
 }
+
 
 # Run the application 
 shinyApp(ui = ui, server = server)
