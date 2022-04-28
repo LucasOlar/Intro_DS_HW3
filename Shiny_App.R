@@ -1,7 +1,8 @@
 
+library(shiny)
 library(shinyalert)
 
-source(file = "shiny_app_code.R", local = T)
+source(file = "shiny_app_code.R")
 
 # Define UI for application
 ui <- fluidPage(
@@ -11,36 +12,43 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      numericInput("bacteria_button", "Number of Bacteria:", value = 1),
-      checkboxInput("move_button", "Bacteria keep moving inside the sugar", value = F),
+      numericInput("bacteria_button", "Number of Bacteria:", value = 5),
+      checkboxInput("move_button", "Bacteria keep moving inside the sugar", value = T),
       numericInput("c_button", "K constant C", value = 0),
-      numericInput("seed_choice_button", "Simulation seed", value = 1),
-      actionButton("compute", "Useless Button", icon = icon("calculator"), width = 200, height = 100),
-      sliderInput("stages", "Run animation of simulation", min = 0, max = 100, value = 1, animate = T)
+      numericInput("seed_choice_button", "Simulation seed", value = 12345),
+      actionButton("compute", "Confirm Values", icon = icon("calculator"), width = 200, height = 100),
+      sliderInput("stages", "Run animation of simulation", min = 0, max = 100, value = 0, animate = T),
+      actionButton("grade", "What grade should I give them ?")
     ),
     
     mainPanel(
-      plotOutput("bacteriaPlot"),
+      plotOutput("bacteriaPlot")
     )    
   )
 )
 
 # Define server
 server <- function(input, output) {
-  output$bacteriaPlot <- renderPlot({  
-    bacteria_plot(
-      c = input$c_button, 
-      seed_choice = input$seed_choice_button, 
-      bacteria = input$bacteria_button, 
-      move = input$move_button, 
-      stages = input$stages)
-  }, height = 500, width = 600)
   
-  observeEvent(input$compute,{
+  data_bact <- eventReactive(input$compute,{
+    bacteria_data(
+      input$bacteria_button,
+      input$move_button,
+      input$c_button,
+      input$seed_choice_button)
+  })
+  
+  output$bacteriaPlot <- renderPlot({ 
+    bacteria_plot(
+      positions = data_bact(),
+      stages = input$stages)
+  }, height = 600, width = 700)
+
+  observeEvent(input$grade,{
     shinyalert(
-      title = "That was useless!",
-      text = "Because of how our code was made this button isn't usefull")
-    })
+      title = "THIS DESERVES A 6 !!!",
+      text = "Please come on, we love you <3")
+  })
 }
 
 # Run the application 
