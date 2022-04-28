@@ -1,11 +1,12 @@
 
 library(shiny)
 library(shinyalert)
+library(shinythemes)
 
-source(file = "shiny_app_code.R")
+source(file = "shiny_app_code.R", local = T)
 
 # Define UI for application
-ui <- fluidPage(
+ui <- fluidPage(theme = shinytheme("slate"),
   
   # Application title
   titlePanel(h4("Bacteria Mobility App")),
