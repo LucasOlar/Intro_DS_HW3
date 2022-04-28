@@ -1,3 +1,4 @@
+
 library(shinyalert)
 
 source(file = "shiny_app_code.R", local = T)
@@ -41,7 +42,6 @@ server <- function(input, output) {
       text = "Because of how our code was made this button isn't usefull")
     })
 }
-
 
 # Run the application 
 shinyApp(ui = ui, server = server)

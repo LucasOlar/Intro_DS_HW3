@@ -29,6 +29,7 @@ for (i in seq(1, bacteria*2, 2)){
   #determining the position at point t = 1
   for(j in seq(1, steps-1)){
     
+    #if norm < or = to 3m and we want it to move in the sugar
     norm = sqrt(abs(initial_position[j,i])^2+abs(initial_position[j,i+1])^2)
     if (norm <= 3 && move == T){
       condition = 0
@@ -74,6 +75,7 @@ for (i in seq(1, bacteria*2, 2)){
   }
 }
 
+#if we don't want them to move in the sugar
 if (move == F){
   #Creating the central zone after which it no longer moves
   for (i in seq(1, bacteria*2, 2)){
@@ -121,7 +123,7 @@ colnames(positions) <- c("name", "x", "time", "y")
 angle <- seq(-pi, pi, length = 50)
 df <- data.frame(x1 = sin(angle)*3, y1 = cos(angle)*3)
 
-#Change value here of stages to get graph
+#Create data of positions and at time t, and of all previous positions (for lines)
   data_positions = positions %>%
     filter(time == stages) %>%
     select(name, x, y)
@@ -130,6 +132,7 @@ df <- data.frame(x1 = sin(angle)*3, y1 = cos(angle)*3)
     filter(time <= stages) %>%
     select(name, x, y)
   
+#count the number of points within the center circle
   count_center = 0
   
   for(j in seq(from = 1, to = bacteria)){
@@ -138,6 +141,7 @@ df <- data.frame(x1 = sin(angle)*3, y1 = cos(angle)*3)
     }
   }
   
+#make the plot 
   plot_bacteria = ggplot(data = data_positions, aes(x = x, y = y, color = name)) +
     geom_polygon(aes(x = x1, y = y1),fill = "tan2", linetype = 1, colour = "black", data = df, inherit.aes = F) +
     annotate("text", x = 0, y = 0, label = "SUGAR", col = "white", size = 6) +
